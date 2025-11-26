@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Student" ALTER COLUMN "enrolledAt" SET DATA TYPE BIGINT,
+ALTER COLUMN "expiresAt" SET DATA TYPE BIGINT;
