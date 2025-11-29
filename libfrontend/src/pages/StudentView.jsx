@@ -3,10 +3,10 @@ import Loader from '../components/Loader';
 
 const QR_CARD_NAME = "Entry/Exit";
 const PAYMENT_CARD_NAME = "Payment";
-const QR_REDIRECT_TO = "/qr";
-const PAYMENT_REDIRECT_TO = "/payment";
+const QR_REDIRECT_TO = "/student/QRScanner";
+const PAYMENT_REDIRECT_TO = "/student/payment";
 
-export default function CardList() {
+export default function () {
     const navigate = useNavigate();
 
     const button_list = [
@@ -16,7 +16,6 @@ export default function CardList() {
 
     return (
         <>
-        {loading ? <Loader/> : <></>}
         <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50">
             <div className="flex flex-col gap-6">
                 {button_list.map((card, index) => (

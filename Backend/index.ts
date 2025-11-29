@@ -257,18 +257,29 @@ cron.schedule(process.env.CRON_EXPIRY_RUN_TIME!,async function(){
     sendEmail({to,subject,text});
 })
 
-// TEMP STORAGE (use DB in production)
-let scanEvents:any = {};  
-// Format: scanEvents[scannerId] = scannedByUserDetails;
 
-// A1 sends scan result
+// student sends scan result
 app.post("/api/scan", async (req, res) => {
-    const { scannerId, scannedBy } = req.body;
+    const { scannerId } = req.body;
+
+    if(scannerId !== process.env.ADMIN_QR_SCANNER_ID){
+        return res.status(400).json({
+            success:false,
+            message:"Invalid QR",
+        })
+    }
+    
     if(req.cookies["token"]){
         console.log(req.cookies["token"],`req.cookies["token"]`);
         try {
             const result = <jwt.enrollStudentProps>jwt.verify(req.cookies["token"],process.env.JWT_SECRET!);
             console.log(result,"result");
+             if(!result?.userId){
+                return res.status(400).json({
+                    success:false,
+                    message:"Please Login !!",
+                })
+            }
 
            const isEntryDone = await entryExitDB.entryExit.findFirst({
                 where:{
@@ -306,6 +317,7 @@ app.post("/api/scan", async (req, res) => {
             return res.json({ success: true });
         } catch (error) {
             console.log(error,"error message::");
+            return res.json({ success: false });
         }   
     }
     console.log("No cookies present");
@@ -313,10 +325,8 @@ app.post("/api/scan", async (req, res) => {
 });
 
 // A2 polls here
-app.get("/api/check-scan/:scannerId",async (req, res) => {
-    try {
-        try {
-            
+app.get("/api/check-scan",async (req, res) => {
+     try {
             const result = await entryExitDB.entryExit.findMany({
                 where:{
                     isActive:true
@@ -333,23 +343,40 @@ app.get("/api/check-scan/:scannerId",async (req, res) => {
             });
             
 
-            if((!result)){
+            if((!result?.length)){
                 throw Error("Nothing Scanned !!");
             }
     
              return res.json({ success: true , scannedBy: result });
         } catch (error) {
+             console.error(error,"Inside catch fn error !!");
              return res.json({ success: false });
         }
-
-       
-    } catch (error) {
-        return res.json({ success: false });
-    }
    
 });
 
+app.get('/api/entryExitView',async function (req,res,next) {
+        
+        try {
+             const result = await entryExitDB.entryExit.findMany({
+                where:{
+                    isActive:false,
+                }
+            });
 
+            return res.status(200).json({
+                success:true,
+                data:result,
+            })
 
+        } catch (error) {
+            
+            console.log(error,"Inside entryExit View catch Fn");
+            return res.status(500).json({
+                success:false,
+                message:"Something Went Wrong While Entry Exit View",
+            })
+        }      
+})
 
 app.listen(PORT);

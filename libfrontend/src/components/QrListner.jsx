@@ -1,22 +1,23 @@
 import { useEffect, useState } from "react";
 
-export default function QrAdminListener({ userId }) {
+export default function QrAdminListener() {
   const [scannedBy, setScannedBy] = useState(null);
 
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
-        const res = await fetch("http://localhost:3001/api/check-scan/" + userId);
+        const res = await fetch("http://localhost:3001/api/check-scan/");
         const data = await res.json();
 
         if (data.scannedBy) {
           setScannedBy(data.scannedBy);
-          clearInterval(interval); // stop polling after success
         }
       } catch (error) {
         console.log(error,"inside qr listner"); 
       }
-    }, 5000); // poll every 1 second  
+    }, 5000); // poll every 5 second  
+
+    return ()=>clearInterval(interval);
   }, []);
 
   if (!scannedBy) {

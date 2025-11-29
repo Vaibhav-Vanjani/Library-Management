@@ -5,10 +5,12 @@ import Loader from '../components/Loader';
 
 const PENDING_PAYMENT_CARD_NAME = "Pending Payment";
 const ENROLLMENT_FORM_CARD_NAME = "Enrollment Form";
-const PENDING_PAYMENT_REDIRECT_TO = "/pendingPayment";
-const ENROLLMENT_FORM_REDIRECT_TO = "/enroll";
+const ENTRY_EXIT_CARD_NAME = "Entry/Exit";
+const PENDING_PAYMENT_REDIRECT_TO = "/admin/pendingPayment";
+const ENROLLMENT_FORM_REDIRECT_TO = "/admin/enroll";
+const ENTRY_EXIT_REDIRECT_TO = "/admin/EntryExitView";
 
-export default function CardList() {
+export default function () {
     const navigate = useNavigate();
     const {pendingDefaulter,setPendingDefaulter} = useStudentContext();
     const [loading,setLoading] = useState(true);
@@ -37,7 +39,8 @@ export default function CardList() {
 
     const button_list = [
         { cardName: PENDING_PAYMENT_CARD_NAME, goto: PENDING_PAYMENT_REDIRECT_TO ,props:{pendingDefaulter}},
-        { cardName: ENROLLMENT_FORM_CARD_NAME, goto: ENROLLMENT_FORM_REDIRECT_TO, props:{}}
+        { cardName: ENROLLMENT_FORM_CARD_NAME, goto: ENROLLMENT_FORM_REDIRECT_TO, props:{}},
+        { cardName: ENTRY_EXIT_CARD_NAME, goto: ENTRY_EXIT_REDIRECT_TO, props:{}},
     ];
 
     return (

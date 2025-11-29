@@ -1,7 +1,8 @@
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { useEffect } from "react";
+import { redirect } from "react-router-dom";
 
-export default function ({ currentUser = "1245" }) {
+export default function () {
 
   useEffect(() => {
     const scanner = new Html5QrcodeScanner(
@@ -13,17 +14,30 @@ export default function ({ currentUser = "1245" }) {
     scanner.render(async (decodedText) => {
       const { scannerId } = JSON.parse(decodedText);
 
+      if(!scannerId){
+        return alert("Invalid Scan !!");
+      }
+
       try {
-        await fetch("http://localhost:3001/api/scan", {
+        const response = await fetch("http://localhost:3001/api/scan", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
             body: JSON.stringify({
-            scannerId,
-            scannedBy: currentUser
-        })
-      });
-        alert("Scan sent to server!");
+            scannerId
+          })
+        });
+
+        if(response.ok){
+          const data = await response.json();
+          if(data.success){
+            redirect('/student/verifiedScan');        
+          }
+          else{
+             alert("FAILURE SCAN");
+          }
+        }
+        
       } catch (error) {
         console.log("inside A1scanner",error);
       }
