@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStudentContext } from '../context/StudentContext';
 import { useEffect, useState } from 'react';
 import Loader from '../components/Loader';
+import UserScanNotification from '../components/UserScanNotification';
 
 const PENDING_PAYMENT_CARD_NAME = "Pending Payment";
 const ENROLLMENT_FORM_CARD_NAME = "Enrollment Form";
@@ -14,6 +15,8 @@ export default function () {
     const navigate = useNavigate();
     const {pendingDefaulter,setPendingDefaulter} = useStudentContext();
     const [loading,setLoading] = useState(true);
+    const [userScan,setUserScan] = useState([]);
+    console.log(userScan,"Admin userScan");
 
     useEffect(()=>{
         async function getDefaulter() {
@@ -28,6 +31,9 @@ export default function () {
                     console.log(data,"getDefaulter -data");
                     setPendingDefaulter(data.data);
                 }
+                else{
+                    alert("Something Went Wrong while fetching pending payments !!");
+                }
             } catch (error) {
                 console.log(error,"inside getDefaulter - /defaulter call");
                 alert("Something Went Wrong");
@@ -35,6 +41,23 @@ export default function () {
             setLoading(false);
         }
         getDefaulter();
+
+        const interval = setInterval(async function (params) {
+            try {
+                const response = await fetch('http://localhost:3001/api/check-scan');
+                if(response.ok){
+                    const data = await response.json();
+                    if(data?.scannedBy?.length){
+                        console.log("data.scannedBy",data.scannedBy);
+                        setUserScan(data.scannedBy);
+                    }
+                }
+            } catch (error) {
+                console.log(error,"Check scan");
+            }        
+        },5000);
+
+        return ()=>clearInterval(interval);
     },[]);
 
     const button_list = [
@@ -45,7 +68,7 @@ export default function () {
 
     return (
         <>
-        {loading ? <Loader/> : <></>}
+       <UserScanNotification userScan={userScan}/>
         <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50">
             <div className="flex flex-col gap-6">
                 {button_list.map((card, index) => (

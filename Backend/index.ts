@@ -133,6 +133,14 @@ app.post('/login',async (req,res,next)=>{
 
     let {email,userId} = req.body;
     console.log({email,userId},"email,userId");
+
+    if(!email || !userId){
+        return res.status(400).json({
+            success:false,
+            message:"Please Fill Email and userId for Login !!",
+        })
+    }
+
     let result:enrollStudentProps | null;
     try {
         result = await studentInfoDB.student.findFirst({
@@ -140,6 +148,7 @@ app.post('/login',async (req,res,next)=>{
                 email,userId
             }
         });
+        
         if(result){
             result.expiresAt = result.expiresAt!.toString();
             result.enrolledAt = result.enrolledAt!.toString();   
@@ -182,6 +191,7 @@ app.get('/defaulter',async (req,res,next) => {
         result = result.map(student => ({
         ...student,
         expiresAt: student.expiresAt ? student.expiresAt.toString() : null,
+        enrolledAt: student.enrolledAt ? student.enrolledAt.toString() : null,
         }));
     } catch (error) {
         console.log(error,"Inside /defaulter catch");
@@ -295,7 +305,8 @@ app.post("/api/scan", async (req, res) => {
                         userId:result.userId
                     },
                     data:{
-                        exitTime:Date.now().toString()
+                        exitTime:Date.now().toString(),
+                        isActive:true
                     }
                 })
 
@@ -370,13 +381,21 @@ app.get('/api/entryExitView',async function (req,res,next) {
             })
 
         } catch (error) {
-            
+
             console.log(error,"Inside entryExit View catch Fn");
             return res.status(500).json({
                 success:false,
                 message:"Something Went Wrong While Entry Exit View",
             })
         }      
+})
+
+app.get('/logout',(req,res,next)=>{
+    res.clearCookie('token');
+    return res.status(200).json({
+        success:true,
+        message:"Logout Success"
+    })
 })
 
 app.listen(PORT);

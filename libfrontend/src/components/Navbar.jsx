@@ -1,5 +1,23 @@
+import { useStudentContext } from "../context/StudentContext";
+import {useNavigate} from 'react-router-dom';
+
 export default function Navbar() {
   const {loggedInUser} = useStudentContext();
+  const redirect = useNavigate();
+  async function logoutHandler() {
+      try {
+          await fetch('http://localhost:3001/logout',{
+            method:"GET",
+            credentials:"include",
+          });
+          redirect('/');
+      } catch (error) {
+        console.log(error,"Inside logoutHandler catch fn");
+        alert("Something went wrong");
+      }
+  }
+
+
   return (
     <nav className="bg-blue-600 text-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -12,7 +30,7 @@ export default function Navbar() {
 
           {/* Right Section - Auth Buttons */}
           <ul className="flex space-x-4">
-            {loggedInUser?.userId 
+            {!loggedInUser?.userId 
                     ?
             (<li>
               <button className="bg-white text-blue-600 px-4 py-1 rounded hover:bg-gray-100 transition">
@@ -21,7 +39,8 @@ export default function Navbar() {
             </li>)
             :
            ( <li>
-              <button className="bg-red-500 px-4 py-1 rounded hover:bg-red-600 transition">
+              <button className="bg-red-500 px-4 py-1 rounded hover:bg-red-600 transition"
+               onClick={logoutHandler}>
                 Logout
               </button>
             </li>)

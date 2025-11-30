@@ -1,9 +1,9 @@
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { useEffect } from "react";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function () {
-
+  const redirect = useNavigate();
   useEffect(() => {
     const scanner = new Html5QrcodeScanner(
       "qr-reader",
@@ -30,12 +30,12 @@ export default function () {
 
         if(response.ok){
           const data = await response.json();
-          if(data.success){
-            redirect('/student/verifiedScan');        
-          }
-          else{
-             alert("FAILURE SCAN");
-          }
+          console.log("data",data);
+          redirect('/student/verifiedScan');        
+        }
+        else{
+           const data = await response.json();
+           alert(data.message);
         }
         
       } catch (error) {

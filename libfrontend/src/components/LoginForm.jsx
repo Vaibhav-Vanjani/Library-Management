@@ -19,13 +19,18 @@ export default function(){
 
             if(response.ok){
                 const data = await response.json();
-                if(data?.data?.isAdmin){
-                    setLoggedInUser(data.data);
-                    redirect('/admin');
+                if(data.success){
+                    if(data?.data?.isAdmin){
+                        setLoggedInUser(data.data);
+                        redirect('/admin');
+                    }
+                    else{
+                        setLoggedInUser(data.data);
+                        redirect('/student')
+                    }
                 }
                 else{
-                    setLoggedInUser(data.data);
-                    redirect('/student')
+                    alert(data.message);
                 }
             }
         } catch (error) {

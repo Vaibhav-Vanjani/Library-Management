@@ -14,6 +14,7 @@ import Login from './pages/Login';
 import StudentView from './pages/StudentView';
 import { useContext, useEffect } from 'react';
 import { useStudentContext } from './context/StudentContext';
+import VerifiedScan from './pages/VerifiedScan';
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
          <Route path='/student' element={<Outlet/>}>
             <Route index element={<StudentView/>}></Route>
             <Route path='/student/QRScanner' element={<QrScanner/>}></Route>
+            <Route path='/student/verifiedScan' element={<VerifiedScan/>}></Route>        
          </Route>
          <Route path='/admin' element={<Outlet/>}>
             <Route index element={<Home/>}></Route>
