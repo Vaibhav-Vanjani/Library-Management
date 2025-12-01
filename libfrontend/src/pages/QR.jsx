@@ -47,14 +47,22 @@ export default function () {
   }, []);
 
   return (
-    <><div>
-          <h2>Scan A2’s QR</h2>
-          <div
-              id="qr-reader"
-              className="w-64 h-64 border rounded-lg shadow-lg"
-          ></div>
-      </div>
-      <hr />
-      </>
+  <>
+  <button
+        onClick={() => redirect(-1)}
+        className="absolute top-20 left-8 mb-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+      >
+        Back
+  </button>
+  <div className="flex flex-col items-center justify-center mt-6">
+    <h2 className="text-2xl font-semibold mb-4 text-gray-800">Scan QR</h2>
+
+    <div
+      id="qr-reader"
+      className="w-64 h-64 rounded-lg shadow-lg border border-gray-300 
+                 bg-white flex flex-col flex-wrap items-end justify-center"
+    ></div>
+  </div>
+</>
   );
 }

@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 export default function () {
   const [entryExitRows,setEntryExitRows] = useState([]);
   const [loading,setLoading] = useState(true);  
+  const activeStudent = entryExitRows.filter((row)=>{
+    return row.isPresent;
+  })
   useEffect(() => {
     async function getAllEntryExitColumn() {
         try{
@@ -26,30 +29,52 @@ export default function () {
   }
 
   return (
-    <>
-    <section className="flex">
-        <div>{"USER ID"} | </div>
-        <div>{"ENTRY TIME"} | </div>
-        <div>{"EXIT TIME"}</div>
-        <hr></hr>
-    </section>
-    {
-        
+  <div className="flex flex-col justify-center items-center mt-6">
 
-        entryExitRows?.length && entryExitRows.map((row)=>{
+    {/* Title */}
+    <div className="bg-gray-700 text-white px-6 py-3 rounded-md text-2xl font-semibold shadow mb-6">
+      Student Currently Present: {activeStudent?.length}
+    </div>
 
-            const entryTime = (Number)(row.entryTime);
-            const exitTime = (Number)(row.exitTime);
-            return <>
-                <section key={row.userId} className="flex">
-                    <div>{row.userId} | </div>
-                    <div>{(new Date(entryTime).getHours() + ":" + new Date(entryTime).getMinutes()).toString()} | </div>
-                    <div>{(new Date(exitTime).getHours() + ":" + new Date(exitTime).getMinutes()).toString()}</div>
-                    <hr></hr>
-                 </section>
-            </>
-        })
-    }
-    </>
-  );
+    {/* Container */}
+    <div className="w-full max-w-3xl">
+
+      {/* Header */}
+      <section className="flex font-semibold border-b-2 pb-3 mb-3 text-xl text-gray-800">
+        <div className="w-1/3 text-left">USER ID</div>
+        <div className="w-1/3 text-left">ENTRY TIME</div>
+        <div className="w-1/3 text-left">EXIT TIME</div>
+      </section>
+
+      {/* Rows */}
+      {entryExitRows?.length > 0 &&
+        entryExitRows.map((row) => {
+          const entry = new Date(Number(row.entryTime));
+          const exit = new Date(Number(row.exitTime));
+
+          return (
+            <section
+              key={row.userId + row.entryTime}
+              className={
+                `flex items-center px-4 py-3 mb-2 rounded-lg shadow 
+                 text-lg transition-colors 
+                 ${row.isPresent ? "bg-green-200 border-l-4 border-green-600" : "bg-red-200 border-l-4 border-red-600"}`
+              }
+            >
+              <div className="w-1/3 text-left font-medium">{row.userId}</div>
+              <div className="w-1/3 text-left">
+                {entry.getHours()}:{entry.getMinutes().toString().padStart(2, "0")}
+              </div>
+              <div className="w-1/3 text-left">
+                {exit.getHours()}:{exit.getMinutes().toString().padStart(2, "0")}
+              </div>
+            </section>
+          );
+        })}
+
+    </div>
+  </div>
+);
+
+
 }

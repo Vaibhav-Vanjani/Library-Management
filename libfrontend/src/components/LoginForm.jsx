@@ -1,12 +1,15 @@
 import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { useStudentContext } from "../context/StudentContext";
+import Loader from "./Loader";
 
 
 export default function(){  
     const redirect = useNavigate();
     const [loginFormData,setLoginFormData] = useState({});
     const {loggedInUser,setLoggedInUser} = useStudentContext();
+    const [loading,setLoading] = useState(false);
+
     useEffect(()=>{
         async function isLoggedIn() {
              try {
@@ -19,6 +22,7 @@ export default function(){
 
             if(response.ok){
                 const data = await response.json();
+                console.log('data',data);
                 if(data.success){
                     if(data?.data?.isAdmin){
                         setLoggedInUser(data.data);
@@ -30,6 +34,7 @@ export default function(){
                     }
                 }
                 else{
+                    console.log('data alert',data);
                     alert(data.message);
                 }
             }
@@ -48,6 +53,7 @@ export default function(){
     async function loginFormSubmitHandler(event){
         event.preventDefault();
         try {
+            setLoading(true);
              const response = await fetch('http://localhost:3001/login',{
                 method:"POST",
                 credentials: "include",
@@ -57,40 +63,85 @@ export default function(){
 
             if(response.ok){
                 const data = await response.json();
-                if(data?.data?.isAdmin){
-                    redirect('/admin');
+                console.log('data',data);
+                if(data.success){
+                    if(data?.data?.isAdmin){
+                        setLoggedInUser(data.data);
+                        setLoading(false);
+                        redirect('/admin');
+                    }
+                    else{
+                        setLoggedInUser(data.data);
+                        setLoading(false);
+                        redirect('/student')
+                    }
                 }
                 else{
-                    redirect('/student')
+                    console.log('data alert',data);
+                     setLoading(false);
+                    alert(data.message);
                 }
             }
             else{
                 console.log(response);
+                setLoading(false);
                 alert("Invalid Crendentials");
             }
         } catch (error) {
+            setLoading(false);
             console.log(error,"Inside loginFormSubmitHandler");
+            alert("Contact Admin - Something Went Wrong !!");
         }   
     }
 
+    if(loading){
+        return <Loader/>
+    }
 
-    return <>
-        <form onSubmit={loginFormSubmitHandler}>
-            <input type="email" 
-                   required 
-                   onChange={loginFormChangeHandler}
-                   placeholder="Enter Email"
-                   name="email"
-                   value={loginFormData["email"] ?? ""}
+
+   return (<>
+   <div className="absolute top-1/3 w-11/12 sm:absolute top-1/3 left-1/2 -translate-x-1/2">
+        <form
+            onSubmit={loginFormSubmitHandler}
+            className="w-full max-w-sm mx-auto bg-white shadow-md rounded-lg p-6 space-y-4"
+        >
+            {/* Email */}
+            <input
+            type="email"
+            required
+            onChange={loginFormChangeHandler}
+            placeholder="Enter Email"
+            name="email"
+            value={loginFormData["email"] ?? ""}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md 
+                        focus:outline-none focus:ring-2 focus:ring-blue-500 
+                        text-gray-800"
             />
-             <input type="text" 
-                   required 
-                   onChange={loginFormChangeHandler}
-                   placeholder="Enter User ID"
-                   name="userId"
-                   value={loginFormData["userId"] ?? ""}
-            />    
-            <button>Login</button>
+
+            {/* User ID */}
+            <input
+            type="text"
+            required
+            onChange={loginFormChangeHandler}
+            placeholder="Enter User ID"
+            name="userId"
+            value={loginFormData["userId"] ?? ""}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md 
+                        focus:outline-none focus:ring-2 focus:ring-blue-500 
+                        text-gray-800"
+            />
+
+            {/* Button */}
+            <button
+            className="w-full bg-blue-600 hover:bg-blue-700 
+                        text-white font-semibold py-2 rounded-md 
+                        transition-colors"
+            >
+            Login
+            </button>
         </form>
+    </div>
         </>
+        )
+
 }

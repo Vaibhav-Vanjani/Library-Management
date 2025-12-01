@@ -20,4 +20,5 @@ model entryExit{
   exitTime String
   currentDate String
   isActive Boolean
+  isPresent Boolean @default(false)
 }

@@ -1,0 +1,12 @@
+#qr-reader__scan_region{
+    display: flex;
+    justify-content: center;
+}
+
+#qr-reader__scan_region{
+    opacity: 0.3;
+}
+
+#qr-reader__dashboard{
+    position: absolute;
+}

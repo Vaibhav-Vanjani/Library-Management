@@ -306,7 +306,8 @@ app.post("/api/scan", async (req, res) => {
                     },
                     data:{
                         exitTime:Date.now().toString(),
-                        isActive:true
+                        isActive:true,
+                        isPresent:!isEntryDone.isPresent,
                     }
                 })
 
@@ -319,7 +320,8 @@ app.post("/api/scan", async (req, res) => {
                         entryTime:Date.now().toString(),
                         exitTime: Date.now().toString(),
                         currentDate:Date.now().toString(),
-                        isActive:true
+                        isActive:true,
+                        isPresent:true,
                     }
                 })
                 console.log("firstEntry",firstEntry);
