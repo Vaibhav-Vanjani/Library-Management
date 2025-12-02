@@ -1,0 +1,14 @@
+import 'dotenv/config'
+import { PrismaClient } from '../generated/prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+
+console.log("i am in db.ts");
+
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL })
+
+const globalForPrisma = global as unknown as { prisma: PrismaClient };
+
+export const studentInfoDB =
+  globalForPrisma.prisma || new PrismaClient({ adapter });
+
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = studentInfoDB;

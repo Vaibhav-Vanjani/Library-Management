@@ -340,6 +340,22 @@ app.post("/api/scan", async (req, res) => {
 // A2 polls here
 app.get("/api/check-scan",async (req, res) => {
      try {
+
+            const paymentDone =  await studentInfoDB.student.findMany({
+                where:{
+                    expiryUpdated:true
+                }
+            });
+
+            await studentInfoDB.student.updateMany({
+                where:{
+                    expiryUpdated:true
+                },
+                data:{
+                    expiryUpdated:false
+                }
+            });
+
             const result = await entryExitDB.entryExit.findMany({
                 where:{
                     isActive:true
@@ -355,12 +371,11 @@ app.get("/api/check-scan",async (req, res) => {
                 }
             });
             
-
-            if((!result?.length)){
-                throw Error("Nothing Scanned !!");
+            if((!result?.length) && (!paymentDone?.length)){
+                return res.json({ success: false });
             }
     
-             return res.json({ success: true , scannedBy: result });
+             return res.json({ success: true , scannedBy: result , paymentDone });
         } catch (error) {
              console.error(error,"Inside catch fn error !!");
              return res.json({ success: false });

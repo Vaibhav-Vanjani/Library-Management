@@ -23,6 +23,8 @@ export default function () {
     const {pendingDefaulter,setPendingDefaulter} = useStudentContext();
     const [loading,setLoading] = useState(true);
     const [userScan,setUserScan] = useState([]);
+    const [userPayment,setUserPayment] = useState([]);
+    
     console.log(userScan,"Admin userScan");
 
     useEffect(()=>{
@@ -54,9 +56,15 @@ export default function () {
                 const response = await fetch('http://localhost:3001/api/check-scan');
                 if(response.ok){
                     const data = await response.json();
-                    if(data?.scannedBy?.length){
-                        console.log("data.scannedBy",data.scannedBy);
-                        setUserScan(data.scannedBy);
+                    if(data?.scannedBy?.length || data?.paymentDone?.length){
+                        if(data?.scannedBy?.length){
+                            console.log("data.scannedBy",data.scannedBy);
+                            setUserScan(data.scannedBy);
+                        }
+                        else{
+                            console.log("data.paymentDone",data.paymentDone);
+                            setUserPayment(data.paymentDone);
+                        }
                     }
                 }
             } catch (error) {
@@ -77,6 +85,7 @@ export default function () {
 
     return (
         <>
+       {/* <UserPayment userPayment={userPayment}/>  */}
        <UserScanNotification userScan={userScan}/>
         <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50">
             <div className="flex gap-6 flex-wrap justify-center">
