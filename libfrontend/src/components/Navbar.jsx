@@ -28,11 +28,7 @@ export default function Navbar() {
           {/* Right Section - Auth Buttons */}
           <ul className="flex space-x-4">
             {!loggedInUser?.userId ? (
-              <li>
-                <button className="bg-white text-blue-600 px-4 py-1 rounded hover:bg-gray-100 transition">
-                  Login
-                </button>
-              </li>
+              <></>
             ) : (
               <li>
                 <button

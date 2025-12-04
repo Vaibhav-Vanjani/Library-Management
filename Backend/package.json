@@ -10,7 +10,8 @@
     "migrate-studentInfoDB": "npx prisma migrate dev --schema ./prisma-student/schema.prisma --config ./prisma-student/prisma.config.ts",
     "migrate-EntryExitDB": "npx prisma migrate dev --schema ./prisma-entry-exit/schema.prisma --config ./prisma-entry-exit/prisma.config.ts",
     "generate-studentInfoDB": "npx prisma generate --schema ./prisma-student/schema.prisma --config ./prisma-student/prisma.config.ts",
-    "generate-EntryExitDB": "npx prisma generate --schema ./prisma-entry-exit/schema.prisma --config ./prisma-entry-exit/prisma.config.ts"
+    "generate-EntryExitDB": "npx prisma generate --schema ./prisma-entry-exit/schema.prisma --config ./prisma-entry-exit/prisma.config.ts",
+    "build":"tsc -b && tsc-alias"
   },
   "keywords": [],
   "author": "",
