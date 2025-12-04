@@ -11,8 +11,8 @@
     "migrate-EntryExitDB": "npx prisma migrate dev --schema ./prisma-entry-exit/schema.prisma --config ./prisma-entry-exit/prisma.config.ts",
     "generate-studentInfoDB": "npx prisma generate --schema ./prisma-student/schema.prisma --config ./prisma-student/prisma.config.ts",
     "generate-EntryExitDB": "npx prisma generate --schema ./prisma-entry-exit/schema.prisma --config ./prisma-entry-exit/prisma.config.ts",
-    "build":"tsc -b && tsc-alias",
-    "start":"node dist/index.js"
+    "build": "tsc -b && tsc-alias",
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -38,6 +38,8 @@
     "@types/nodemailer": "^7.0.4",
     "dotenv": "^17.2.3",
     "prisma": "^7.0.1",
-    "tsc-alias": "1.8.16"
+    "tsc-alias": "^1.8.16",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.9.3"
   }
 }
