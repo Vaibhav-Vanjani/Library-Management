@@ -38,9 +38,12 @@ export default function ({ userScan }) {
             strokeWidth="3"
             viewBox="0 0 24 24"
           >
-            <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
+            <path
+              d="M5 13l4 4L19 7"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
-
           {/* Message */}
           {showUser[0].userId} JUST SCANNED
         </div>

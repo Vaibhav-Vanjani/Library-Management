@@ -6,18 +6,22 @@ export default function QrAdminListener() {
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
-        const res = await fetch("http://localhost:3001/api/check-scan/");
+        const res = await fetch(process.env.REACT_APP_BACKEND_URL + "/admin" + "/api/check-scan/",{
+          method:"GET",
+          headers:{"Content-Type":"application/json"},
+          credentials:"include",
+        });
         const data = await res.json();
 
         if (data.scannedBy) {
           setScannedBy(data.scannedBy);
         }
       } catch (error) {
-        console.log(error,"inside qr listner"); 
+        console.log(error, "inside qr listner");
       }
-    }, 5000); // poll every 5 second  
+    }, 5000); // poll every 5 second
 
-    return ()=>clearInterval(interval);
+    return () => clearInterval(interval);
   }, []);
 
   if (!scannedBy) {
