@@ -26,4 +26,4 @@ app.get('/checkvercel',(req,res)=>{
   })
 })
 
-app.listen(PORT);
+export default app;
