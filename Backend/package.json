@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "type": "module",
+  "type": "commonjs",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
