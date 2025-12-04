@@ -7,8 +7,8 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "es2015",
-    "target": "esnext",
+    "target": "es2020",          // modern JS features
+    "module": "CommonJS",        // important for Node / Vercel
     "types": [],
     // For nodejs:
     // "lib": ["esnext"],
@@ -35,13 +35,14 @@
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": false,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
-     "moduleResolution": "bundler",
-     "noImplicitAny": false
+    "noImplicitAny": false,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "tsc-alias": {
     "resolveFullPaths": true,
