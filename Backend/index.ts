@@ -15,9 +15,14 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({origin: process.env.FRONTEND_URL,credentials: true}));
 
-app.use('/admin',AdminMiddleware,adminRoutes);
-app.use('/common',commonRoutes);
-app.use('/user',UserMiddleware,userRoutes);
+try {
+  app.use('/admin',AdminMiddleware,adminRoutes);
+  app.use('/common',commonRoutes);
+  app.use('/user',UserMiddleware,userRoutes);  
+} catch (error) {
+    console.log(error,"inside catch");
+}
+
 
 app.get('/checkvercel',(req,res)=>{
   res.json({
@@ -26,4 +31,5 @@ app.get('/checkvercel',(req,res)=>{
   })
 })
 
-export default app;
+// export default app;
+app.listen(PORT);
