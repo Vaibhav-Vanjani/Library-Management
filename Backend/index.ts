@@ -19,4 +19,11 @@ app.use('/admin',AdminMiddleware,adminRoutes);
 app.use('/common',commonRoutes);
 app.use('/user',UserMiddleware,userRoutes);
 
+app.get('/checkvercel',(req,res)=>{
+  res.json({
+    success:true,
+    message:"running",
+  })
+})
+
 app.listen(PORT);
