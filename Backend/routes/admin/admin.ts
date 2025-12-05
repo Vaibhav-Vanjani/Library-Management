@@ -48,11 +48,20 @@ app.get('/listEnrollStudent', async (req, res, next) => {
         }));
     } catch (error) {
         console.log(error,"Inside /listEnrollStudent catch");
+        res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+        res.set('Pragma', 'no-cache');
+        res.set('Expires', '0');
+        res.set('Surrogate-Control', 'no-store');
+
         return res.status(500).json({
             success:false,
             data:"Invalid listEnrollStudent"
         })
     }
+     res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+     res.set('Pragma', 'no-cache');
+     res.set('Expires', '0');
+     res.set('Surrogate-Control', 'no-store');
     return res.json({
         success:true,
         data: result,
@@ -85,6 +94,10 @@ app.get('/defaulter',async (req,res,next) => {
             data:"Invalid listEnrollStudent"
         })
     }
+     res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+     res.set('Pragma', 'no-cache');
+     res.set('Expires', '0');
+     res.set('Surrogate-Control', 'no-store');
     return res.json({
         success:true,
         data: result,
@@ -129,7 +142,10 @@ app.get("/api/check-scan",async (req, res) => {
             if(!(result?.length) && !(paymentDone?.length)){
                 return res.json({ success: false });
             }
-    
+            res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+            res.set('Pragma', 'no-cache');
+            res.set('Expires', '0');
+            res.set('Surrogate-Control', 'no-store');
              return res.json({ success: true , scannedBy: result , paymentDone });
         } catch (error) {
              console.error(error,"Inside catch fn error !!");
@@ -147,13 +163,16 @@ app.get('/api/entryExitView',async function (req,res,next) {
                 }
             });
 
+            res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+            res.set('Pragma', 'no-cache');
+            res.set('Expires', '0');
+            res.set('Surrogate-Control', 'no-store');
             return res.status(200).json({
                 success:true,
                 data:result,
             })
 
         } catch (error) {
-
             console.log(error,"Inside entryExit View catch Fn");
             return res.status(500).json({
                 success:false,
