@@ -64,7 +64,7 @@ app.post('/login',async (req,res,next)=>{
     if(!!result){
         const jwtSigned = jwt.sign(result,process.env.JWT_SECRET!);
         res.cookie('token',jwtSigned,{ expires: new Date(Date.now() + 24*60*60*1000), httpOnly: true,secure: true,
-        sameSite: 'none', path: '/',domain: process.env.BACKEND_DOMAIN_NAME
+        sameSite: 'none', path: '/'
     })
     }
 
@@ -81,8 +81,7 @@ app.get('/logout',(req,res,next)=>{
         httpOnly: true,
         secure: true,
         sameSite: 'none', 
-        path: '/',
-        domain: process.env.BACKEND_DOMAIN_NAME
+        path: '/'
         });
 
     return res.status(200).json({
