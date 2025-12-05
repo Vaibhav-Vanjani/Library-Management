@@ -41,7 +41,7 @@ export default function () {
     console.log(formData, "Payment Form Data");
 
     try {
-      const response = await fetch("http://localhost:3002/api/v1/payment", {
+      const response = await fetch(process.env.REACT_APP_BACKEND_PAYMENT_GATEWAY_URL+ "/api/v1/payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -83,7 +83,7 @@ export default function () {
             try {
               setLoading(true);
               const response = await fetch(
-                "http://localhost:3002/api/v1/verify-payment",
+                process.env.REACT_APP_BACKEND_PAYMENT_GATEWAY_URL + "/api/v1/verify-payment",
                 {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
