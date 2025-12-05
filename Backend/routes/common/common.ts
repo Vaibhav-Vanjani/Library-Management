@@ -76,7 +76,12 @@ app.post('/login',async (req,res,next)=>{
 
 
 app.get('/logout',(req,res,next)=>{
-    res.clearCookie('token');
+   res.clearCookie('token', {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none'
+        });
+
     return res.status(200).json({
         success:true,
         message:"Logout Success"
