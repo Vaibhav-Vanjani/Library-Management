@@ -7,7 +7,7 @@ export default function Navbar() {
   async function logoutHandler() {
     try {
       await fetch(process.env.REACT_APP_BACKEND_URL + "/common" + "/logout", {
-        method: "GET",
+        method: "POST",
         credentials: "include",
       });
       setLoggedInUser(null);

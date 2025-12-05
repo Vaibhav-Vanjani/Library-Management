@@ -80,7 +80,7 @@ app.post('/login',async (req,res,next)=>{
 })
 
 
-app.get('/logout',(req,res,next)=>{
+app.post('/logout',(req,res,next)=>{
    res.clearCookie('token', {
         maxAge: 0,
         httpOnly: true,
