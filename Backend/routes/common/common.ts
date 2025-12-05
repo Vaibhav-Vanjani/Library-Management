@@ -63,9 +63,8 @@ app.post('/login',async (req,res,next)=>{
 
     if(!!result){
         const jwtSigned = jwt.sign(result,process.env.JWT_SECRET!);
-        res.cookie('token',jwtSigned,{ expires: new Date(Date.now() + 60*60*1000), httpOnly: true })
-        // console.log(jwtSigned,"jwtsigned");
-        // console.log(res,"res");
+        res.cookie('token',jwtSigned,{ expires: new Date(Date.now() + 24*60*60*1000), httpOnly: true,secure: true,
+        sameSite: 'none'})
     }
 
     return res.json({
