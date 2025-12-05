@@ -63,9 +63,13 @@ app.post('/login',async (req,res,next)=>{
 
     if(!!result){
         const jwtSigned = jwt.sign(result,process.env.JWT_SECRET!);
-        res.cookie('token',jwtSigned,{ expires: new Date(Date.now() + 24*60*60*1000), httpOnly: true,secure: true,
-        sameSite: 'none', path: '/'
-    })
+       res.cookie('token', jwtSigned, {
+            maxAge: 24*60*60*1000,
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+            path: '/'
+        });
     }
 
     return res.json({
@@ -78,11 +82,12 @@ app.post('/login',async (req,res,next)=>{
 
 app.get('/logout',(req,res,next)=>{
    res.clearCookie('token', {
+        maxAge: 0,
         httpOnly: true,
         secure: true,
-        sameSite: 'none', 
+        sameSite: 'none',
         path: '/'
-        });
+    });
 
     return res.status(200).json({
         success:true,
