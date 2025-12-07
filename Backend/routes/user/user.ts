@@ -42,7 +42,6 @@ app.post("/api/scan", async (req, res) => {
             console.log("isEntryDone",isEntryDone);
 
             if(!!isEntryDone){
-                  if(Date.now() > ((Number)(isEntryDone.entryTime) + 2*60*60*1000)){
                       const exit = await entryExitDB.entryExit.update({
                         where:{
                             userId:result.userId
@@ -54,7 +53,6 @@ app.post("/api/scan", async (req, res) => {
                         }
                     })
                     console.log("exit",exit);
-                   }
             }
             else{
             const firstEntry = await entryExitDB.entryExit.create({
