@@ -4,8 +4,9 @@ import { entryExitDB } from '../../config/dbEntryExit';
 import "dotenv/config";
 import type { enrollStudentProps } from "jsonwebtoken";
 import jwt, { type JwtPayload } from 'jsonwebtoken';
+import Mutex from "../../utils/lockthread";
 
-
+const lock = new Mutex();
 const app = Router();
 
 // student sends scan result
@@ -31,7 +32,8 @@ app.post("/api/scan", async (req, res) => {
                 })
             }
 
-           const isEntryDone = await entryExitDB.entryExit.findFirst({
+           lock.run(async function () {
+                 const isEntryDone = await entryExitDB.entryExit.findFirst({
                 where:{
                    userId:result.userId,
                 }
@@ -67,7 +69,7 @@ app.post("/api/scan", async (req, res) => {
                 })
                 console.log("firstEntry",firstEntry);
             }
-
+           }) 
             return res.json({ success: true });
         } catch (error) {
             console.log(error,"error message::");
