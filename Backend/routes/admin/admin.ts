@@ -1,14 +1,25 @@
-import { Router } from "express";
+import { Request, Router } from "express";
 import {studentInfoDB} from '../../config/db';
 import { entryExitDB } from '../../config/dbEntryExit';
 import "dotenv/config";
 import type { enrollStudentProps } from "jsonwebtoken";
+import Mutex from "../../utils/lockthread";
+import cloudinary from "../../config/cloudinary";
+import multer from "multer";
+import streamifier from 'streamifier';
+import {UploadApiResponse,UploadApiErrorResponse} from 'cloudinary';
 
+
+const fileUpload = multer();
+const lock = new Mutex();
 const app = Router();
 
 app.post('/enrollStudent', async (req, res, next) => {
-    const { userId, email, fullName, payment , enrolledAt , expiresAt, phoneNumber } = req.body;
-    console.log({ userId, email, fullName, payment },"{ userId, email, fullName, payment }");
+    const { userId, email, fullName, payment , 
+            enrolledAt , expiresAt, phoneNumber, 
+            aadharCardNumber, profilePic} = req.body;
+    console.log({ userId, email, fullName, payment , enrolledAt , expiresAt, phoneNumber, 
+            aadharCardNumber, profilePic},"{ userId, email, fullName, payment }");
     let result:enrollStudentProps;
     try {
         result = await studentInfoDB.student.create({
@@ -20,7 +31,9 @@ app.post('/enrollStudent', async (req, res, next) => {
             phoneNumber,
             enrolledAt,
             expiresAt,
-            isAdmin:false
+            isAdmin:false,
+            aadharCardNumber,
+            profilePic,
         }
     });
     } catch (error) {
@@ -219,6 +232,58 @@ app.post('/api/v1/searchStudent',async (req,res,next)=>{
             success:false,
             message:"Issue in getting student",
         })
+    }
+})
+
+app.post('/uploadPic',fileUpload.single('file'),async (req,res,next)=>{
+
+    const file = req.file;
+
+    if(!file){
+        return res.status(400).json({
+            succes:false,
+            message:"Please upload again",
+        })
+    }
+
+    let url = "";
+    try {
+    url = await lock.run(async () => {
+        function streamUpload(req: Request): Promise<UploadApiResponse> {
+        return new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+            (error, result) => {
+                if (result) resolve(result);
+                else reject(error);
+            }
+            );
+
+            streamifier.createReadStream(req.file!.buffer).pipe(stream);
+        });
+        }
+
+        async function upload(req: Request): Promise<string> {
+            const result = await streamUpload(req);
+            console.log(result, "upload response from cloudinary");
+            return result.secure_url;
+        }
+
+        return upload(req); 
+    });
+
+    // now url contains secure_url
+    console.log("Final URL:", url);
+
+    const response = {
+        success: true,
+        url
+    };
+
+    res.json(response);
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Upload failed", details: err });
     }
 })
 

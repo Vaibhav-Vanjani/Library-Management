@@ -7,8 +7,32 @@ export default function StylishForm() {
   const [enrollFormData, setEnrollFormData] = useState({});
   const [loading, setLoading] = useState(false);
 
-  function enrollFormchangeHandler(event) {
+  async function enrollFormchangeHandler(event) {
     let { name, value, type } = event.target;
+    if(type === 'file'){
+      try {
+          const fileData = new FormData();
+          fileData.append('file',event.target.files[0]);
+          
+          const response = await fetch(process.env.REACT_APP_BACKEND_URL + '/admin' + '/uploadPic',{
+            method:"POST",
+            body:fileData,
+            credentials:"include"
+          });
+          const data = await response.json();
+          
+          if(response.ok){
+            alert("Profile Upload Success");
+            value = data.url;
+          }
+          else{
+            alert("Profile Upload Failure");
+            return;
+          }
+      } catch (error) {
+        console.log(error,"something went wrong in uploading file");
+      }
+    }
     setEnrollFormData((prev) => {
       return { ...prev, [name]: value };
     });
@@ -49,6 +73,7 @@ export default function StylishForm() {
     }
     setLoading(false);
     setEnrollFormData({});
+    enrollFormData["profilePic"] = "";
   }
 
   return (
@@ -62,12 +87,38 @@ export default function StylishForm() {
       </button>
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
         <form
-          className="bg-white shadow-md rounded-lg p-8 w-full max-w-md space-y-4"
+          className="mt-6 bg-white shadow-md rounded-lg p-8 w-full max-w-md space-y-4"
           onSubmit={enrollFormSubmitHandler}
         >
           <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
             Registration Form
           </h2>
+
+       <div className="flex justify-center">
+        <div className="relative rounded-full w-40 h-40 border flex items-center justify-center">
+          <div className="flex flex-col flex-wrap items-center">
+            <svg class="w-8 h-8 mb-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v9m-5 0H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2M8 9l4-5 4 5m1 8h.01"/></svg>
+            <span>Upload Pic</span>
+          </div>
+          <input
+            type="file"
+            name="profilePic"
+            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer rounded-full"
+            onChange={enrollFormchangeHandler}
+          />
+        </div>
+      </div>
+
+
+          <input
+            type="text"
+            name="aadharCardNumber"
+            placeholder="Aadhar Card Number"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={enrollFormData["aadharCardNumber"] ?? ""}
+            onChange={enrollFormchangeHandler}
+            required
+          />
 
           <input
             type="text"
