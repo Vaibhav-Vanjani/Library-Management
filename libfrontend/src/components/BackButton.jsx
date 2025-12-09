@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 export default function () {
+  // generic back button 
   const redirect = useNavigate();
   return (
     <button
