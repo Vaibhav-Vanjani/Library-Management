@@ -21,13 +21,13 @@ export default function () {
   return (
     <>
       {expiredStudent ? (
-        <div className="bg-red-500/50 text-white text-center px-4 py-2 rounded-md font-semibold">
+        <div className="bg-red-500/50 text-white text-center px-4 py-2 font-semibold">
           Pending Payment
         </div>
       ) : (
         <></>
       )}
-      <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50">
+      <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50 dark:bg-black">
         <div className="flex flex-col gap-6">
           {button_list.map((card, index) => (
             <div

@@ -52,7 +52,7 @@ export default function () {
       >
         Back
       </button>
-      <div className="flex flex-col items-center justify-center mt-6">
+      <div className="flex flex-col items-center justify-center mt-6 h-100">
         <h2 className="text-2xl font-semibold mb-4 text-gray-800">Scan QR</h2>
 
         <div
