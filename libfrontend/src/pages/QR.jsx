@@ -48,12 +48,12 @@ export default function () {
     <>
       <button
         onClick={() => redirect(-1)}
-        className="absolute top-20 left-8 mb-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+        className="absolute top-20 left-8 mb-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition dark:bg-gray-500/50"
       >
         Back
       </button>
       <div className="flex flex-col items-center justify-center mt-6 h-100">
-        <h2 className="text-2xl font-semibold mb-4 text-gray-800">Scan QR</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-white">Scan QR</h2>
 
         <div
           id="qr-reader"

@@ -6,6 +6,8 @@ const PAYMENT_CARD_NAME = "Payment";
 const QR_REDIRECT_TO = "/student/QRScanner";
 const PAYMENT_REDIRECT_TO = "/student/payment";
 
+const PENDING_PAYMENT="Pending Payment";
+
 export default function () {
   const navigate = useNavigate();
   const { loggedInUser } = useStudentContext();
@@ -21,8 +23,8 @@ export default function () {
   return (
     <>
       {expiredStudent ? (
-        <div className="bg-red-500/50 text-white text-center px-4 py-2 font-semibold">
-          Pending Payment
+        <div className="bg-red-500 text-white text-center px-4 py-2 font-semibold">
+          {PENDING_PAYMENT}
         </div>
       ) : (
         <></>
@@ -33,9 +35,9 @@ export default function () {
             <div
               key={index}
               onClick={() => navigate(card.goto)}
-              className="cursor-pointer w-64 p-6 bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all text-center"
+              className="cursor-pointer w-64 p-6 bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all text-center dark:bg-gray-500/50"
             >
-              <div className="text-xl font-semibold text-gray-800">
+              <div className="text-xl font-semibold text-gray-800 dark:text-white">
                 {card.cardName}
               </div>
             </div>

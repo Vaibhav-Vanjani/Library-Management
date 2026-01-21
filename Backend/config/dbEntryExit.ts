@@ -13,7 +13,8 @@ const adapter = new PrismaMariaDb({
   connectionLimit: 5,
   user:process.env.ENTRY_EXIT_DB_USER!,
   password:process.env.ENTRY_EXIT_DB_PASSWORD!,
-  database:process.env.ENTRY_EXIT_DB_DATABASE!
+  database:process.env.ENTRY_EXIT_DB_DATABASE!,
+  allowPublicKeyRetrieval: true,
 })
 
 const globalForPrisma = global as unknown as { prismab: PrismaClient };
