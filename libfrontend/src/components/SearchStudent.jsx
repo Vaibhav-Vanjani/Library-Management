@@ -94,7 +94,7 @@ export default function () {
             {/* Search Button */}
             <button
               onClick={searchStudentSubmitHandler}
-              className="px-6 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 transition md:mx-3"
+              className="px-6 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 transition md:mx-3 dark:bg-gray-500/50"
             >
               Search
             </button>
@@ -159,7 +159,7 @@ export default function () {
                 ))}
               </div>
             ) : (
-              <div className="text-gray-500 mt-4">No Data Found</div>
+              <div className="text-gray-500 mt-4 text-2xl dark:text-white">Search Student:</div>
             )}
           </section>
         </section>

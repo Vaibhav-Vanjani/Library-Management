@@ -56,16 +56,16 @@ export default function StylishForm() {
       {loading ? <Loader /> : <></>}
       <button
         onClick={() => redirect(-1)}
-        className="absolute top-20 left-8 mb-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+        className="absolute top-20 left-8 mb-6 px-4 py-2 bg-blue-500 rounded hover:bg-blue-600 transition dark:bg-gray-500/50 text-white"
       >
         Back
       </button>
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-black">
         <form
-          className="bg-white shadow-md rounded-lg p-8 w-full max-w-md space-y-4"
+          className="bg-white shadow-md rounded-lg p-8 w-full max-w-md space-y-4 dark:bg-gray-500/50"
           onSubmit={enrollFormSubmitHandler}
         >
-          <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center dark:text-white">
             Registration Form
           </h2>
 
@@ -73,7 +73,7 @@ export default function StylishForm() {
             type="text"
             name="userId"
             placeholder="Identification Number"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-black"
             value={enrollFormData["userId"] ?? ""}
             onChange={enrollFormchangeHandler}
             required
@@ -83,7 +83,7 @@ export default function StylishForm() {
             type="text"
             name="fullName"
             placeholder="Enter Full Name"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-black"
             value={enrollFormData["fullName"] ?? ""}
             onChange={enrollFormchangeHandler}
             required
@@ -93,7 +93,7 @@ export default function StylishForm() {
             type="email"
             name="email"
             placeholder="Enter Email"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-black"
             value={enrollFormData["email"] ?? ""}
             onChange={enrollFormchangeHandler}
             required
@@ -113,7 +113,7 @@ export default function StylishForm() {
             type="date"
             name="enrolledAt"
             placeholder="Enrollment Date"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={"w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 " + (!enrollFormData["enrolledAt"] ? "dark:text-gray-500" : "dark:text-black")}
             value={enrollFormData["enrolledAt"] ?? ""}
             onChange={enrollFormchangeHandler}
             required
@@ -123,7 +123,7 @@ export default function StylishForm() {
             type="date"
             name="expiresAt"
             placeholder="Expiry Date"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={"w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 " + (!enrollFormData["expiresAt"] ? "dark:text-gray-500" : "dark:text-black")}
             value={enrollFormData["expiresAt"] ?? ""}
             onChange={enrollFormchangeHandler}
             required
@@ -133,7 +133,7 @@ export default function StylishForm() {
             type="text"
             name="phoneNumber"
             placeholder="Phone Number"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-black"
             value={enrollFormData["phoneNumber"] ?? ""}
             onChange={enrollFormchangeHandler}
             required
@@ -141,7 +141,7 @@ export default function StylishForm() {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200 dark:bg-gray-500/100 text-white"
           >
             Submit
           </button>
