@@ -100,22 +100,22 @@ export default function () {
     <>
       {/* <UserPayment userPayment={userPayment}/>  */}
       <UserScanNotification userScan={userScan} />
-      <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50">
+      <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50 dark:bg-black">
         <div className="flex gap-6 flex-wrap justify-center">
           {button_list.map((card, index) => (
             <div
               key={index}
               onClick={() => navigate(card.goto)}
-              className="cursor-pointer w-64 p-12 bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all text-center"
+              className="cursor-pointer w-64 p-12 bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all text-center dark:bg-gray-500/50"
             >
               {card.cardName === PENDING_PAYMENT_CARD_NAME ? (
-                <span className="absolute top-1 right-3 bg-red-500/50 border-white px-2 rounded">
+                <span className="absolute top-1 right-3 bg-red-500/50 border-white px-2 rounded dark:bg-red-500">
                   {pendingDefaulter.length}
                 </span>
               ) : (
                 <></>
               )}
-              <div className="text-xl font-semibold text-gray-800">
+              <div className="text-xl font-semibold text-gray-800 dark:text-white">
                 {card.cardName}
               </div>
             </div>

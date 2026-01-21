@@ -7,25 +7,6 @@ export default function PendingDefaulters() {
   const redirect = useNavigate();
   const { pendingDefaulter } = useStudentContext();
 
-  //   const pendingDefaulter = [
-  //     {
-  //       fullName: "test 1",
-  //       userId: "837287382",
-  //       enrolledAt: "1758751325000",
-  //       Payment: "1200",
-  //       expiresAt: "1766613725000",
-  //       email: "test@gmail.com",
-  //     },
-  //     {
-  //       fullName: "test2",
-  //       userId: "39289392",
-  //       enrolledAt: "1758751325000",
-  //       Payment: "1200",
-  //       expiresAt: "1766613725000",
-  //       email: "test2@gmail.com",
-  //     },
-  //   ];
-
   return (
     <>
       <div className="min-h-screen bg-gray-100 p-6">

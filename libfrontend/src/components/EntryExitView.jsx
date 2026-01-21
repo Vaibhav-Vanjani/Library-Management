@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import BackButton from "./BackButton";
+import Loader from "./Loader";
 
 export default function () {
   const [entryExitRows, setEntryExitRows] = useState([]);
@@ -29,7 +30,7 @@ export default function () {
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p><Loader/></p>;
   }
 
   return (
