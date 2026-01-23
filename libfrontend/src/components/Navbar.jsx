@@ -12,6 +12,11 @@ export default function Navbar() {
         credentials: "include",
       });
       setLoggedInUser(null);
+      
+      if(document.documentElement.classList.contains('dark')){
+        document.documentElement.classList.remove('dark');
+      }
+        
       redirect("/");
     } catch (error) {
       console.log(error, "Inside logoutHandler catch fn");
