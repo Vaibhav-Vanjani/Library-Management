@@ -19,7 +19,9 @@ app.post('/login',async (req,res,next)=>{
                 return res.json({
                     success:!!result,
                     data: result,
-                    message: !!result ? "login success" : "Invalid login"
+                    message: !!result ? "login success" : "Invalid login",
+                    token:req.cookies['token'],
+                    test:'check2'
                 })
             }
         } catch (error) {
