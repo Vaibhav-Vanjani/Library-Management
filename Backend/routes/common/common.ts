@@ -70,9 +70,15 @@ app.post('/login',async (req,res,next)=>{
             sameSite: 'none',
             path: '/'
         });
+        return res.json({
+        success:!!result,
+        data: result,
+        message: !!result ? "login success" : "Invalid login",
+        token:jwtSigned,
+    })
     }
 
-    return res.json({
+     return res.json({
         success:!!result,
         data: result,
         message: !!result ? "login success" : "Invalid login"

@@ -1,8 +1,9 @@
 import type { NextFunction, Request, Response } from 'express';
 import jwt,{type JwtPayload} from 'jsonwebtoken';
 
-export default function AdminMiddleware(req:Request,res:Response,next:NextFunction){           
-        if(!!req.cookies['token']){
+export default function AdminMiddleware(req:Request,res:Response,next:NextFunction){ 
+        const token = req.cookies['token'] ?? req.body.token;    
+        if(!!token){
             try {
                  console.log("inside admin middleware");
                 const result = <jwt.enrollStudentProps>jwt.verify(req.cookies['token'],process.env.JWT_SECRET!);
