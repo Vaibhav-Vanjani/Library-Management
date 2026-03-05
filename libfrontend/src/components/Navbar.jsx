@@ -1,5 +1,6 @@
 import { useStudentContext } from "../context/StudentContext";
 import { useNavigate } from "react-router-dom";
+import ThemeSwitch from "./ThemeSwitch";
 
 export default function Navbar() {
   const { loggedInUser, setLoggedInUser } = useStudentContext();
@@ -11,6 +12,11 @@ export default function Navbar() {
         credentials: "include",
       });
       setLoggedInUser(null);
+      
+      if(document.documentElement.classList.contains('dark')){
+        document.documentElement.classList.remove('dark');
+      }
+        
       redirect("/");
     } catch (error) {
       console.log(error, "Inside logoutHandler catch fn");
@@ -19,7 +25,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-blue-600 text-white shadow-md">
+    <nav className="bg-blue-600 text-white dark:bg-black shadow-md border-b-2 border-b-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           {/* Left Section - Logo / Brand */}
@@ -30,6 +36,8 @@ export default function Navbar() {
             {!loggedInUser?.userId ? (
               <></>
             ) : (
+              <>
+              <li><ThemeSwitch/></li>
               <li>
                 <button
                   className="bg-red-500 px-4 py-1 rounded hover:bg-red-600 transition"
@@ -38,6 +46,7 @@ export default function Navbar() {
                   Logout
                 </button>
               </li>
+              </>
             )}
           </ul>
         </div>

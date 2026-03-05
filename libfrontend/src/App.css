@@ -10,3 +10,8 @@
 #qr-reader__dashboard {
   position: absolute;
 }
+
+#root{
+  height: 100vh;
+  /* background-color: black; */
+}

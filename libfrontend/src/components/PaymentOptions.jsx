@@ -168,7 +168,7 @@ export default function () {
     <>
       <button
         onClick={() => redirect(-1)}
-        className="absolute top-20 left-8 mb-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+        className="absolute top-20 left-8 mb-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition dark:bg-gray-500/50"
       >
         Back
       </button>
@@ -217,14 +217,14 @@ export default function () {
           )}
         </>
       ) : (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100">
-          <section className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-black">
+          <section className="bg-white p-8 rounded-lg shadow-md w-full max-w-md dark:bg-gray-500/50">
             <form onSubmit={paymentFormSubmitHandler} className="space-y-6">
               {/* Months Selection */}
               <div>
                 <label
                   htmlFor="months"
-                  className="block text-gray-700 font-semibold mb-2"
+                  className="block text-gray-700 font-semibold mb-2 dark:text-white"
                 >
                   Duration (in Months):
                 </label>
@@ -246,7 +246,7 @@ export default function () {
 
               {/* Locker Selection */}
               <div>
-                <span className="block text-gray-700 font-semibold mb-2">
+                <span className="block text-gray-700 font-semibold mb-2 dark:text-white">
                   Locker:
                 </span>
                 <div className="flex items-center space-x-4">
@@ -261,9 +261,9 @@ export default function () {
                       value={true}
                       checked={formData.locker === "true"}
                       onChange={paymentFormChangeHandler}
-                      className="form-radio text-blue-500"
+                      className="form-radio text-blue-500 dark:checked:bg-black"
                     />
-                    <span>Yes</span>
+                    <span className="dark:text-white">Yes</span>
                   </label>
 
                   <label
@@ -277,9 +277,9 @@ export default function () {
                       value={false}
                       checked={formData.locker === "false"}
                       onChange={paymentFormChangeHandler}
-                      className="form-radio text-blue-500"
+                      className="form-radio text-blue-500 dark:checked:bg-black"
                     />
-                    <span>No</span>
+                    <span className="dark:text-white">No</span>
                   </label>
                 </div>
               </div>
@@ -288,10 +288,10 @@ export default function () {
               <div>
                 <label
                   htmlFor="total_payment"
-                  className="block text-gray-700 font-semibold text-xl"
+                  className="block text-gray-700 font-semibold text-xl dark:text-white"
                 >
                   Total Payment:{" "}
-                  <span className="text-blue-600">
+                  <span className="text-blue-600 dark:text-white">
                     {formData.Total_payment}
                   </span>
                 </label>
@@ -301,7 +301,7 @@ export default function () {
               <div>
                 <button
                   type="submit"
-                  className="w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
+                  className="w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600 transition-colors dark:text-white bg-gray-500/50 hover:bg-gray-600/50"
                 >
                   Submit
                 </button>

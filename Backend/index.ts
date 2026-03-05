@@ -7,6 +7,7 @@ import commonRoutes from './routes/common/common';
 import userRoutes from './routes/user/user';
 import UserMiddleware from './middleware/user';
 import AdminMiddleware from './middleware/admin';
+import './scheduler/scheduler';
 
 const PORT = process.env.PORT;
 
