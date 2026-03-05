@@ -62,6 +62,10 @@ app.post('/login',async (req,res,next)=>{
     }
 
     if(!!result){
+        res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+        res.setHeader("Pragma", "no-cache");
+        res.setHeader("Expires", "0");
+        res.setHeader("Surrogate-Control", "no-store");
         const jwtSigned = jwt.sign(result,process.env.JWT_SECRET!);
        res.cookie('token', jwtSigned, {
             maxAge: 24*60*60*1000,
