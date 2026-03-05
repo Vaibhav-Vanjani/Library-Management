@@ -75,6 +75,7 @@ app.post('/login',async (req,res,next)=>{
         data: result,
         message: !!result ? "login success" : "Invalid login",
         token:jwtSigned,
+        test:'check'
     })
     }
 
