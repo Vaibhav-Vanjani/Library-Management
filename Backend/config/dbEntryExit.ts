@@ -10,7 +10,7 @@ const CONNECTION_LIMIT = process.env.ENTRY_EXIT_DB_CONNECTION_LIMIT;
 const adapter = new PrismaMariaDb({
   host: process.env.ENTRY_EXIT_DB_HOST!,
   port: 21133,
-  connectionLimit: 5,
+  connectionLimit: 10,
   user:process.env.ENTRY_EXIT_DB_USER!,
   password:process.env.ENTRY_EXIT_DB_PASSWORD!,
   database:process.env.ENTRY_EXIT_DB_DATABASE!,
