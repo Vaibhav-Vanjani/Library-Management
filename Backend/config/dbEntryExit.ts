@@ -29,7 +29,8 @@ const adapter = new PrismaMariaDb({
   allowPublicKeyRetrieval: true,
   ssl: {
   rejectUnauthorized: false // <- allows self-signed certs
-}
+},
+connectTimeout: 10000
 })
 
 const globalForPrisma = global as unknown as { prismab: PrismaClient };
