@@ -27,7 +27,9 @@ const adapter = new PrismaMariaDb({
   password:process.env.ENTRY_EXIT_DB_PASSWORD!,
   database:process.env.ENTRY_EXIT_DB_DATABASE!,
   allowPublicKeyRetrieval: true,
-  ssl:true
+  ssl: {
+  rejectUnauthorized: false // <- allows self-signed certs
+}
 })
 
 const globalForPrisma = global as unknown as { prismab: PrismaClient };
@@ -35,7 +37,7 @@ const globalForPrisma = global as unknown as { prismab: PrismaClient };
 export const entryExitDB =
   globalForPrisma.prismab || new PrismaClient({adapter});
 
-// console.log(entryExitDB,"entryExitDBB");
+console.log(entryExitDB,"entryExitDBB");
 
 if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prismab = entryExitDB;
