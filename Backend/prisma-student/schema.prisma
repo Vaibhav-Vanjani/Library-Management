@@ -18,6 +18,8 @@ model Student {
   enrolledAt    BigInt?
   expiresAt     BigInt?
   expiryUpdated Boolean @default(false)
+  expoToken     String?
+  reportsTo     String?
 }
 
 model payment {

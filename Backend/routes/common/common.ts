@@ -1,6 +1,5 @@
 import { Router } from "express";
 import {studentInfoDB} from '../../config/db';
-import { entryExitDB } from '../../config/dbEntryExit';
 import "dotenv/config";
 import type { enrollStudentProps } from "jsonwebtoken";
 import jwt, { type JwtPayload } from 'jsonwebtoken';
@@ -10,17 +9,18 @@ const app = Router();
 
 app.post('/login',async (req,res,next)=>{
     console.log(req.cookies,"req.cookies");
+    const token = req.body.token ?? req.cookies['token'] 
        
-    if(!!req.cookies['token']){
+    if(!!token){
         console.log(req.cookies,"req.cookies");
         try {
-            const result = jwt.verify(req.cookies['token'],process.env.JWT_SECRET!);
+            const result = jwt.verify(token,process.env.JWT_SECRET!);
             if(!!result){
                 return res.json({
                     success:!!result,
                     data: result,
                     message: !!result ? "login success" : "Invalid login",
-                    token:req.cookies['token'],
+                    token:token,
                     test:'check2'
                 })
             }
@@ -33,8 +33,8 @@ app.post('/login',async (req,res,next)=>{
         }
     }
 
-    let {email,userId} = req.body;
-    console.log({email,userId},"email,userId");
+    let {email,userId,expoToken} = req.body;
+    // console.log({email,userId},"email,userId");
 
     if(!email || !userId){
         return res.status(400).json({
@@ -54,6 +54,20 @@ app.post('/login',async (req,res,next)=>{
         if(result){
             result.expiresAt = result.expiresAt!.toString();
             result.enrolledAt = result.enrolledAt!.toString();   
+
+            if(expoToken){
+                const signedExpoToken = jwt.sign(expoToken,process.env.JWT_SECRET!);
+                 await studentInfoDB.student.update({
+                    data:{
+                        expoToken:signedExpoToken
+                    },
+                    where:{
+                        email,userId
+                    }
+                });
+            }else{
+                console.log("Expo token is missing!")
+            }      
         }
     } catch (error) {
         console.log(error,"Inside /listEnrollStudent catch");

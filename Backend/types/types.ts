@@ -11,6 +11,7 @@ declare module 'jsonwebtoken' {
     expiresAt:bigint | null | string,
     isAdmin:boolean
     phoneNumber:string | null,
+    expoToken:string | null,
 }
 }
 
@@ -24,6 +25,7 @@ export interface enrollStudentProps extends jwt.JwtPayload{
     expiresAt:bigint | null | string,
     isAdmin:boolean
     phoneNumber:string | null,
+    expoToken:string | null,
 }
 
 export interface sendEmailProps{
