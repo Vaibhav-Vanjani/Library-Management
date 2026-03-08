@@ -286,7 +286,7 @@ app.post('/api/v1/deleteStudent',async (req,res,next)=>{
 
 app.post('/api/v1/sendPushNotification', async (req,res,next)=>{
     const { email,title,description } = req.body;
-    console.log({ email },"{ userId, email, fullName, payment }");
+    console.log({ email,title,description },"{ email,title,description }");
     let result:enrollStudentProps | null;
     try {
         result = await studentInfoDB.student.findFirst({
