@@ -299,7 +299,7 @@ app.post('/api/v1/sendPushNotification', async (req,res,next)=>{
             try {
                 const expoToken = jwt.verify(result.expoToken,process.env.JWT_SECRET!);
                 console.log(expoToken,"______expotoken",result.expoToken,"______result.expotoken");
-                sendExpoPushNotification({expoTokenList:[expoToken as string],title,description});
+               await sendExpoPushNotification({expoTokenList:[expoToken as string],title,description});
             } catch (error) {
                 console.log("Error while /sendPushNotification", error);
                  return res.status(500).json({
