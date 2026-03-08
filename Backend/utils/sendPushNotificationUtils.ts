@@ -15,6 +15,8 @@ export function sendExpoPushNotification({expoTokenList,title,description}:{expo
                         sound: "default"
                     })
                 });
+
+                console.log(url,expoToken,title,description,"______inside send push notification utils");
         } catch (error) {
             console.log(error,"Error while sending push notification!!");
         }  
