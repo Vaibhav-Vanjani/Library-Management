@@ -292,7 +292,7 @@ app.post('/api/v1/deleteStudent',async (req,res,next)=>{
 
 
 app.post('/api/v1/sendPushNotification', async (req,res,next)=>{
-    await notificationUtility(req,res,next);
+    await notificationUtility(req,res,next,null);
 })
 
 app.post('/api/v1/sendPushNotificationToAll', async (req,res,next)=>{
