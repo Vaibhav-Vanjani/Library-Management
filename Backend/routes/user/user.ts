@@ -56,7 +56,7 @@ app.post("/api/scan", async (req, res,next) => {
                         }
                 })
                     console.log("exit",exit);
-                    notificationUtility(req,res,next,{title:"Scan Success",description:`Exit done by ${result.userId}`,email:result.reportsTo!});
+                    await notificationUtility(req,res,next,{title:"Scan Success",description:`Exit done by ${result.userId}`,email:result.reportsTo!});
             }
             else{
             const firstEntry = await entryExitDB.entryExit.create({
@@ -70,7 +70,7 @@ app.post("/api/scan", async (req, res,next) => {
                     }
                 })
                 console.log("firstEntry",firstEntry);
-               notificationUtility(req,res,next,{title:"Scan Success",description:`Entry done by ${result.userId}`,email:result.reportsTo!});
+               await notificationUtility(req,res,next,{title:"Scan Success",description:`Entry done by ${result.userId}`,email:result.reportsTo!});
             }
            }) 
             return res.json({ success: true });
