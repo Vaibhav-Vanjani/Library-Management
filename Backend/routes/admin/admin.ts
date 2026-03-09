@@ -170,7 +170,7 @@ app.get("/api/check-scan",async (req, res) => {
 app.get('/api/entryExitView',async function (req,res,next) {
         
         try {
-            const result = await entryExitDB.entryExit.findMany({});
+            const result = await entryExitDB.entryExit.findMany();
 
             res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
             res.set('Pragma', 'no-cache');
