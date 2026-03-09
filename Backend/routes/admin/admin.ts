@@ -11,7 +11,8 @@ import {UploadApiResponse,UploadApiErrorResponse} from 'cloudinary';
 import Mutex from "../../utils/lockthread";
 import { Request } from "express";
 
-const fileUpload = multer();
+const storage = multer.memoryStorage();
+export const fileUpload = multer({ storage });
 const lock = new Mutex();
 const app = Router();
 
