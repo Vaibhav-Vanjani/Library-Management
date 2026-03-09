@@ -35,7 +35,7 @@ app.post("/api/scan", async (req, res,next) => {
                 })
             }
 
-           lock.run(async function () {
+          await lock.run(async function () {
                  const isEntryDone = await entryExitDB.entryExit.findFirst({
                 where:{
                    userId:result.userId,
