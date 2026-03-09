@@ -10,6 +10,7 @@ import streamifier from 'streamifier';
 import {UploadApiResponse,UploadApiErrorResponse} from 'cloudinary';
 import Mutex from "../../utils/lockthread";
 import { Request } from "express";
+import { notificationUtility } from "../../utils/sendPushNotificationUtils";
 
 const storage = multer.memoryStorage();
 export const fileUpload = multer({ storage });
@@ -17,8 +18,8 @@ const lock = new Mutex();
 const app = Router();
 
 app.post('/enrollStudent', async (req, res, next) => {
-    const { userId, email, fullName, payment , enrolledAt , expiresAt, phoneNumber,reportsTo } = req.body;
-    console.log({ userId, email, fullName, payment },"{ userId, email, fullName, payment }");
+    const { userId, email, fullName, payment , enrolledAt , expiresAt, phoneNumber,reportsTo , profilePic, addharNumber} = req.body;
+    console.log({ userId, email, fullName, payment , enrolledAt , expiresAt, phoneNumber,reportsTo , profilePic, addharNumber },"{ userId, email, fullName, payment }");
     let result:enrollStudentProps;
     try {
         result = await studentInfoDB.student.create({
@@ -31,7 +32,9 @@ app.post('/enrollStudent', async (req, res, next) => {
             enrolledAt,
             expiresAt,
             isAdmin:false,
-            reportsTo
+            reportsTo,
+            profilePic,
+            addharNumber
         }
     });
     } catch (error) {
@@ -43,7 +46,6 @@ app.post('/enrollStudent', async (req, res, next) => {
     }
     return res.json({
         success:true,
-        // data: result,
         message:"success"
     })
 });
@@ -168,11 +170,7 @@ app.get("/api/check-scan",async (req, res) => {
 app.get('/api/entryExitView',async function (req,res,next) {
         
         try {
-             const result = await entryExitDB.entryExit.findMany({
-                where:{
-                    isActive:false,
-                }
-            });
+            const result = await entryExitDB.entryExit.findMany({});
 
             res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
             res.set('Pragma', 'no-cache');
@@ -294,46 +292,7 @@ app.post('/api/v1/deleteStudent',async (req,res,next)=>{
 
 
 app.post('/api/v1/sendPushNotification', async (req,res,next)=>{
-    const { email,title,description } = req.body;
-    console.log({ email,title,description },"{ email,title,description }");
-    let result:enrollStudentProps | null;
-    try {
-        result = await studentInfoDB.student.findFirst({
-        where:{
-            email
-            }
-        });
-
-        if(result?.expoToken){
-            try {
-                const expoToken = jwt.verify(result.expoToken,process.env.JWT_SECRET!);
-                console.log(expoToken,"______expotoken",result.expoToken,"______result.expotoken");
-               await sendExpoPushNotification({expoTokenList:[expoToken as string],title,description});
-            } catch (error) {
-                console.log("Error while /sendPushNotification", error);
-                 return res.status(500).json({
-                    success:false,
-                    message:"Issue while verifying token!"
-                })
-            }
-        }
-        else{
-            return res.status(500).json({
-                success:false,
-                message:"Token Missing"
-            })
-        }
-
-    } catch (error) {
-        return res.status(500).json({
-            success:false,
-            data:"Invalid Details"
-        })
-    }
-    return res.json({
-        success:true,
-        message:"success"
-    })
+    await notificationUtility(req,res,next);
 })
 
 app.post('/api/v1/sendPushNotificationToAll', async (req,res,next)=>{

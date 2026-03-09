@@ -20,6 +20,8 @@ model Student {
   expiryUpdated Boolean @default(false)
   expoToken     String?
   reportsTo     String?
+  profilePic    String?
+  addharNumber  String?
 }
 
 model payment {

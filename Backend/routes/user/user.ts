@@ -5,12 +5,13 @@ import "dotenv/config";
 import type { enrollStudentProps } from "jsonwebtoken";
 import jwt, { type JwtPayload } from 'jsonwebtoken';
 import Mutex from "../../utils/lockthread";
+import { notificationUtility } from "../../utils/sendPushNotificationUtils";
 
 const lock = new Mutex();
 const app = Router();
 
 // student sends scan result
-app.post("/api/scan", async (req, res) => {
+app.post("/api/scan", async (req, res,next) => {
     const { scannerId } = req.body;
 
     if(scannerId !== process.env.ADMIN_QR_SCANNER_ID){
@@ -19,11 +20,13 @@ app.post("/api/scan", async (req, res) => {
             message:"Invalid QR",
         })
     }
+
+    const token = req.body.token ?? req.cookies["token"]
     
-    if(req.cookies["token"]){
-        console.log(req.cookies["token"],`req.cookies["token"]`);
+    if(token){
+        console.log(token,`token`);
         try {
-            const result = <jwt.enrollStudentProps>jwt.verify(req.cookies["token"],process.env.JWT_SECRET!);
+            const result = <jwt.enrollStudentProps>jwt.verify(token,process.env.JWT_SECRET!);
             console.log(result,"result");
              if(!result?.userId){
                 return res.status(400).json({
@@ -42,7 +45,7 @@ app.post("/api/scan", async (req, res) => {
             console.log("isEntryDone",isEntryDone);
 
             if(!!isEntryDone){
-                      const exit = await entryExitDB.entryExit.update({
+                const exit = await entryExitDB.entryExit.update({
                         where:{
                             userId:result.userId
                         },
@@ -51,8 +54,9 @@ app.post("/api/scan", async (req, res) => {
                             isActive:true,
                             isPresent:!isEntryDone.isPresent,
                         }
-                    })
+                })
                     console.log("exit",exit);
+                    notificationUtility(req,res,next,{title:"Scan Success",description:`Exit done by ${result.userId}`});
             }
             else{
             const firstEntry = await entryExitDB.entryExit.create({
@@ -66,6 +70,7 @@ app.post("/api/scan", async (req, res) => {
                     }
                 })
                 console.log("firstEntry",firstEntry);
+               notificationUtility(req,res,next,{title:"Scan Success",description:`Entry done by ${result.userId}`});
             }
            }) 
             return res.json({ success: true });
