@@ -9,7 +9,7 @@ const app = Router();
 
 app.post('/login',async (req,res,next)=>{
     console.log(req.cookies,"req.cookies");
-    const token = req.body.token ?? req.cookies['token'] 
+    const token = req?.body?.token ?? req.cookies['token'] 
        
     if(!!token){
         console.log(req.cookies,"req.cookies");

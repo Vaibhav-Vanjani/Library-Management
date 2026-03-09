@@ -311,7 +311,7 @@ app.post('/api/v1/sendPushNotificationToAll', async (req,res,next)=>{
 
         if(result){
             const expoTokenList= result.filter(student=>student.expoToken?.length).map((student)=> jwt.verify(student.expoToken!,process.env.JWT_SECRET!) as string );
-            sendExpoPushNotification({expoTokenList,title,description});
+            await sendExpoPushNotification({expoTokenList,title,description});
         }
         else{
             console.log("result is empty in /sendPushNotificationToAll",reportsTo);
@@ -365,7 +365,7 @@ app.post('/uploadPic',fileUpload.single('file'),async (req,res,next)=>{
             return result.secure_url;
         }
 
-        return upload(req); 
+        return await upload(req); 
     });
 
     // now url contains secure_url
