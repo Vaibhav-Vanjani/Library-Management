@@ -12,6 +12,9 @@ declare module 'jsonwebtoken' {
     isAdmin:boolean
     phoneNumber:string | null,
     expoToken:string | null,
+    reportsTo:string | null,
+    profilePic:string | null,
+    addharNumber:string | null,
 }
 }
 
@@ -26,6 +29,9 @@ export interface enrollStudentProps extends jwt.JwtPayload{
     isAdmin:boolean
     phoneNumber:string | null,
     expoToken:string | null,
+    reportsTo:string | null,
+    profilePic:string | null,
+    addharNumber:string | null,
 }
 
 export interface sendEmailProps{

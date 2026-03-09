@@ -49,12 +49,13 @@ export async function sendExpoPushNotification({
   }
 }
 
-export async function notificationUtility(req:Request,res:Response,next:NextFunction,requestObj:{title:string,description:string} | null){
+export async function notificationUtility(req:Request,res:Response,next:NextFunction,requestObj:{title:string,description:string,email:string} | null){
   let { email,title,description } = req.body;
 
     if(requestObj){
       title = requestObj.title;
       description = requestObj.description;
+      email = requestObj.email;
     }
   
     console.log({ email,title,description },"{ email,title,description }");
