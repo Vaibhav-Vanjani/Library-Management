@@ -6,7 +6,7 @@ export default function AdminMiddleware(req:Request,res:Response,next:NextFuncti
         if(!!token){
             try {
                  console.log("inside admin middleware");
-                const result = <jwt.enrollStudentProps>jwt.verify(req.cookies['token'],process.env.JWT_SECRET!);
+                const result = <jwt.enrollStudentProps>jwt.verify(token,process.env.JWT_SECRET!);
                 console.log(result,"result");
                 if(!!result){
                     if(result.isAdmin){
