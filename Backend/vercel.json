@@ -8,7 +8,7 @@
 	"crons": [
 		{
 		"path": "/api/reset-entry-exit",
-		"schedule": "40 5 * * *"
+		"schedule": "30 18 * * *"
 		}
 	]
 }
