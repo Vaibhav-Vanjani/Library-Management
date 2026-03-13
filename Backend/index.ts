@@ -8,6 +8,7 @@ import userRoutes from './routes/user/user';
 import UserMiddleware from './middleware/user';
 import AdminMiddleware from './middleware/admin';
 import './scheduler/scheduler';
+import { entryExitDB } from './config/dbEntryExit';
 
 const PORT = process.env.PORT;
 
@@ -32,6 +33,25 @@ app.get('/checkvercel',(req,res)=>{
     message:"running",
   })
 })
+
+app.get("/api/reset-entry-exit", async (req, res) => {
+  const authHeader = req.headers.authorization;
+
+  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    return res.status(401).send("Unauthorized");
+  }
+
+  console.log("Entry exit reset running");
+
+  try {
+    await entryExitDB.entryExit.deleteMany({});
+    res.status(200).send("done");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("error");
+  }
+
+});
 
 // export default app;
 app.listen(PORT);

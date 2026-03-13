@@ -40,6 +40,8 @@ cron.schedule(process.env.CRON_EXPIRY_RUN_TIME!,async function(){
     sendEmail({to,subject,text});
 })
 
+console.log(process.env.CRON_ENTRY_EXIT_REFRESH,"inside scheduleeee");
+
 cron.schedule(process.env.CRON_ENTRY_EXIT_REFRESH!,async function() {
     console.log("Hi i am inside - entry exit reset");
     try {
