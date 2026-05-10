@@ -1,19 +1,22 @@
 import express from 'express';
-import 'dotenv/config';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import "dotenv/config";
 import { instance } from './config/Razorpay';
-import Razorpay from 'razorpay';
 import { validatePaymentVerification } from 'razorpay/dist/utils/razorpay-utils.js';
 import {studentInfoDB} from './config/db';
 
 const PORT = process.env.PORT;
 
 const app = express();
+app.set('etag', false);
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({origin: process.env.FRONTEND_URL,credentials: true}));
 
+app.get('/api/v1/testpaymentbackend',(req,res)=>{
+    res.send({success:true,data:"Payment backend is running"});
+})
 
 
 app.post('/api/v1/payment',async (req,res,next)=>{
