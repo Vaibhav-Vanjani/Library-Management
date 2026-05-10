@@ -13,7 +13,7 @@ export default function PendingDefaulters() {
         {/* Back Button */}
         <button
           onClick={() => redirect(-1)}
-          className="mb-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition dark:bg-gray-500/50"
+          className="my-14 mb-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition dark:bg-gray-500/50"
         >
           Back
         </button>

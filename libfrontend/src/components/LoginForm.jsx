@@ -95,79 +95,233 @@ export default function () {
 
 return (
   <>
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-white to-blue-200 relative overflow-hidden">
+<div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-white to-blue-200 relative overflow-hidden px-4 py-10">
 
-      {/* 🔵 Animated background blobs */}
-      <div className="absolute w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-2xl opacity-30 animate-pulse top-10 left-10"></div>
-      <div className="absolute w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-2xl opacity-30 animate-pulse bottom-10 right-10"></div>
+  {/* 🔵 Background Glow */}
+  <div className="absolute w-72 h-72 bg-blue-300 rounded-full blur-3xl opacity-30 animate-pulse top-0 left-0"></div>
+  <div className="absolute w-72 h-72 bg-purple-300 rounded-full blur-3xl opacity-30 animate-pulse bottom-0 right-0"></div>
 
-      {/* 🧊 Glass Card */}
-      <div className="w-full max-w-md backdrop-blur-lg bg-white/70 shadow-xl rounded-2xl p-8 border border-white/40 transition-all duration-300 hover:shadow-2xl">
+  {/* 🌟 Main Layout */}
+  <div
+    className="
+      relative z-10 flex items-center
+      w-full max-w-7xl
+       flex-col lg:flex-row
+      items-center justify-center
+      gap-5 lg:gap-8
+    "
+  >
+    <div
+      className="
+        w-fit my-10 lg:h-fit
+        bg-white/85
+        backdrop-blur-2xl
+        rounded-3xl
+        p-5
+        shadow-xl
+        border border-cyan-100
+        relative overflow-hidden
+      "
+    >
 
-        {/* ✨ Heading */}
-        <h2 className="text-2xl font-bold text-gray-800 text-center mb-6 tracking-tight">
+      {/* Glow */}
+      <div className="absolute top-0 right-0 bg-cyan-300/20 blur-2xl rounded-full"></div>
+
+      <div className="relative z-10 h-full flex flex-col">
+
+        <div>
+          <p className="text-xs uppercase tracking-[0.25em] text-cyan-500 font-semibold">
+            Test Credentials
+          </p>
+
+          <h3 className="text-xl font-bold text-gray-800 mt-1">
+            🎓 Student Login
+          </h3>
+        </div>
+
+        <button
+          onClick={() =>
+            setLoginFormData({
+              userId: "1247",
+              email: "test2@g.com",
+            })
+          }
+          className="
+            mt-5 w-full
+            bg-cyan-500 hover:bg-cyan-600
+            text-white font-semibold text-sm
+            py-3 rounded-2xl
+            shadow-md hover:shadow-lg
+            transition-all duration-300
+            hover:-translate-y-0.5
+          "
+        >
+          Auto Fill Credentials
+        </button>
+      </div>
+    </div>
+
+    <div
+      className="
+        w-full max-w-md
+        backdrop-blur-xl
+        bg-white/75
+        shadow-2xl
+        rounded-3xl
+        p-6 sm:p-8
+        border border-white/40
+        transition-all duration-300
+        hover:shadow-blue-200/50
+      "
+    >
+
+      {/* Heading */}
+      <div className="mb-8 text-center">
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">
           Welcome Back 👋
         </h2>
 
-        <form onSubmit={loginFormSubmitHandler} className="space-y-5">
-
-          {/* 📧 Email */}
-          <div className="flex flex-col space-y-1">
-            <label className="text-sm text-gray-600 font-medium">
-              Email
-            </label>
-            <input
-              type="email"
-              required
-              onChange={loginFormChangeHandler}
-              placeholder="Enter your email"
-              name="email"
-              value={loginFormData["email"] ?? ""}
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 
-              focus:outline-none focus:ring-2 focus:ring-blue-500 
-              focus:border-blue-500 transition-all duration-200
-              bg-white/80 text-gray-800 placeholder-gray-400"
-            />
-          </div>
-
-          {/* 🆔 User ID */}
-          <div className="flex flex-col space-y-1">
-            <label className="text-sm text-gray-600 font-medium">
-              User ID
-            </label>
-            <input
-              type="text"
-              required
-              onChange={loginFormChangeHandler}
-              placeholder="Enter your user ID"
-              name="userId"
-              value={loginFormData["userId"] ?? ""}
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 
-              focus:outline-none focus:ring-2 focus:ring-blue-500 
-              focus:border-blue-500 transition-all duration-200
-              bg-white/80 text-gray-800 placeholder-gray-400"
-            />
-          </div>
-
-          {/* 🚀 Button */}
-          <button
-            className="w-full bg-gradient-to-r from-blue-600 to-blue-500 
-            hover:from-blue-700 hover:to-blue-600 
-            text-white font-semibold py-2.5 rounded-lg 
-            shadow-md hover:shadow-lg 
-            transform hover:-translate-y-0.5 
-            transition-all duration-200"
-          >
-            Login
-          </button>
-        </form>
-
-        {/* 🔽 Footer */}
-        <p className="text-xs text-gray-500 text-center mt-6">
-          Secure login • Smooth experience
+        <p className="text-sm text-gray-500 mt-2">
+          Login to continue your journey
         </p>
       </div>
+
+      {/* Form */}
+      <form
+        onSubmit={loginFormSubmitHandler}
+        className="space-y-5"
+      >
+
+        {/* Email */}
+        <div className="space-y-1">
+          <label className="text-sm font-medium text-gray-600">
+            Email
+          </label>
+
+          <input
+            type="email"
+            required
+            onChange={loginFormChangeHandler}
+            placeholder="Enter your email"
+            name="email"
+            value={loginFormData["email"] ?? ""}
+            className="
+              w-full px-4 py-3 rounded-xl
+              border border-gray-300
+              bg-white/80
+              text-gray-800
+              placeholder-gray-400
+              focus:outline-none
+              focus:ring-2 focus:ring-blue-500
+              focus:border-blue-500
+              transition-all duration-200
+            "
+          />
+        </div>
+
+        {/* User ID */}
+        <div className="space-y-1">
+          <label className="text-sm font-medium text-gray-600">
+            User ID
+          </label>
+
+          <input
+            type="text"
+            required
+            onChange={loginFormChangeHandler}
+            placeholder="Enter your user ID"
+            name="userId"
+            value={loginFormData["userId"] ?? ""}
+            className="
+              w-full px-4 py-3 rounded-xl
+              border border-gray-300
+              bg-white/80
+              text-gray-800
+              placeholder-gray-400
+              focus:outline-none
+              focus:ring-2 focus:ring-blue-500
+              focus:border-blue-500
+              transition-all duration-200
+            "
+          />
+        </div>
+
+        {/* Login Button */}
+        <button
+          className="
+            w-full
+            bg-gradient-to-r from-blue-600 to-blue-500
+            hover:from-blue-700 hover:to-blue-600
+            text-white font-semibold
+            py-3 rounded-xl
+            shadow-lg hover:shadow-xl
+            transition-all duration-300
+            hover:-translate-y-0.5
+          "
+        >
+          Login
+        </button>
+      </form>
+
+      {/* Footer */}
+      <p className="text-xs text-gray-500 text-center mt-6">
+        Secure login • Smooth UI • Responsive design
+      </p>
     </div>
-  </>
+
+    {/* ================= ADMIN FLOW ================= */}
+    <div
+      className="
+        w-fit my-10 lg: h-fit
+        bg-white/85
+        backdrop-blur-2xl
+        rounded-3xl
+        p-5
+        shadow-xl
+        border border-pink-100
+        relative overflow-hidden
+      "
+    >
+
+      {/* Glow */}
+      <div className="absolute bottom-0 left-0 w-24 h-24 bg-pink-300/20 blur-2xl rounded-full"></div>
+
+      <div className="relative z-10 h-full flex flex-col">
+
+        <div>
+          <p className="text-xs uppercase tracking-[0.25em] text-pink-500 font-semibold">
+            Test Credentials
+          </p>
+
+          <h3 className="text-xl font-bold text-gray-800 mt-1">
+            🛡 Admin Login
+          </h3>
+        </div>
+
+        <button
+          onClick={() =>
+            setLoginFormData({
+              userId: "0000",
+              email: "admin@g.com",
+            })
+          }
+          className="
+            mt-5 w-full
+            bg-pink-500 hover:bg-pink-600
+            text-white font-semibold text-sm
+            py-3 rounded-2xl
+            shadow-md hover:shadow-lg
+            transition-all duration-300
+            hover:-translate-y-0.5
+          "
+        >
+          Auto Fill Credentials
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+</>
 )
 }

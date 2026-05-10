@@ -34,7 +34,7 @@ export default function Navbar() {
           <span className="text-2xl font-bold tracking-tight 
             bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-500 
             bg-clip-text text-transparent">
-            Best Achievers
+            Nexlib
           </span>
 
           {/* ✨ animated underline */}

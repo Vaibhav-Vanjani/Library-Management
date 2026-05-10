@@ -53,7 +53,7 @@ export default function () {
         Back
       </button>
       <div className="flex flex-col items-center justify-center mt-6 h-100">
-        <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-white">Scan QR</h2>
+        <h2 className="mt-12 text-2xl font-semibold mb-4 text-gray-800 dark:text-white">Scan QR</h2>
 
         <div
           id="qr-reader"

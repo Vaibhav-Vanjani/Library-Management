@@ -27,6 +27,7 @@ module.exports = {
         scaleIn: "scaleIn 0.4s ease-out forwards",
         draw: "draw 0.5s ease-out 0.3s forwards",
         slideDownFade: "slideDownFade 0.4s ease-out forwards",
+        "spin-slow": "spin 6s linear infinite",
       },
     },
   },
